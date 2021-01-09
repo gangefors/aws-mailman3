@@ -18,6 +18,10 @@ For example `lists.example.com`.
 
 ### Import SSH keys
 
+Go to Network & Security > Key pairs and choose Actions > Import key pair.
+Enter a name, browse for `~/.ssh/mykey_rsa.pub` and if you want you can add
+tags to this item. Finalize by importing the key pair.
+
 ### Launch EC2 instance
 
 1. Choose AMI
