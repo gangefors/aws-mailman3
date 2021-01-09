@@ -218,10 +218,13 @@ Enter the following:
 
 #### Additional Postfix configuration
 
-Configure TSL certificates, make sure to replace <domain name>.
+Configure TSL certificates, make sure to replace `<domain name>`.
 
     sudo postconf -e smtpd_tls_cert_file=/etc/letsencrypt/live/<domain name>/fullchain.pem
     sudo postconf -e smtpd_tls_key_file=/etc/letsencrypt/live/<domain name>/privkey.pem
+
+Finalize Postfix configuration
+
     sudo postconf -e smtp_sasl_auth_enable=yes
     sudo postconf -e smtp_sasl_password_maps=hash:/etc/postfix/sasl_passwd
     sudo postconf -e smtp_sasl_security_options=noanonymous
