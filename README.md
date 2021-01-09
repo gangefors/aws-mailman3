@@ -1,7 +1,7 @@
 # Mailman3 in AWS
 
-This guide will assit you setting up Mailman3 in AWS.
-I will be using Mailgun to send mail, but any provider will do.
+This guide will assist you in setting up Mailman3 in AWS.
+We will be using Mailgun to send mail, but any provider will do.
 
 When "your domain" is mentioned, it is in regards to the domain name where
 you are running Mailman3, i.e. the doman name pointing to the EC2 instance.
