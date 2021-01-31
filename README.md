@@ -200,7 +200,7 @@ Enter the following:
 
    Use the SMTP host from Mailgun's SMTP credentials, e.g. `smtp.eu.mailgun.org:587`.
 
-4. Root and postmaster mail recipient: `ubuntu`
+4. Root and postmaster mail recipient: `<your@email.address>`
 
 5. Other destinations to accept mail for:
 
