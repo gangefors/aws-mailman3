@@ -1,3 +1,6 @@
+# Set a valid email for Django internal emails
+SERVER_EMAIL = "your-email@address.tld"
+
 # All Social login providers has been removed
 INSTALLED_APPS = [
     'hyperkitty',
