@@ -3,7 +3,7 @@ version: '2'
 
 services:
   mailman-core:
-    image: maxking/mailman-core:0.3
+    image: maxking/mailman-core:${MAILMAN_IMAGE_VERSION}
     restart: always
     stop_grace_period: 30s
     hostname: mailman-core
@@ -18,12 +18,14 @@ services:
     - DATABASE_TYPE=postgres
     - DATABASE_CLASS=mailman.database.postgresql.PostgreSQLDatabase
     - HYPERKITTY_API_KEY=${HYPERKITTY_API_KEY}
+    ports:
+    - "127.0.0.1:8001:8001" # API
+    - "127.0.0.1:8024:8024" # LMTP - incoming emails
     networks:
       mailman:
-        ipv4_address: 172.19.199.2
 
   mailman-web:
-    image: maxking/mailman-web:0.3
+    image: maxking/mailman-web:${MAILMAN_IMAGE_VERSION}
     restart: always
     hostname: mailman-web
     depends_on:
@@ -46,9 +48,11 @@ services:
     - SMTP_HOST_USER=${SMTP_HOST_USER}
     - SMTP_HOST_PASSWORD=${SMTP_HOST_PASSWORD}
     - SMTP_USE_TLS=${SMTP_USE_TLS}
+    ports:
+    - "127.0.0.1:8000:8000" # HTTP
+    - "127.0.0.1:8080:8080" # uwsgi
     networks:
       mailman:
-        ipv4_address: 172.19.199.3
 
   database:
     image: postgres:9.6-alpine
@@ -61,7 +65,6 @@ services:
     - POSTGRES_USER=mailman
     networks:
       mailman:
-        ipv4_address: 172.19.199.4
 
 networks:
    mailman:

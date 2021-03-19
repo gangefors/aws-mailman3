@@ -124,7 +124,7 @@ Replace the matching content with the following.
     server_name <your_domain>;
 
     location / {
-        proxy_pass http://172.19.199.3:8000;
+        proxy_pass http://localhost:8000;
         include uwsgi_params;
         uwsgi_read_timeout 300;
         proxy_set_header Host $host;
@@ -158,7 +158,7 @@ Make sure to update `site_owner` with a valid email.
     [mta]
     incoming: mailman.mta.postfix.LMTP
     outgoing: mailman.mta.deliver.deliver
-    lmtp_host: 172.19.199.2
+    lmtp_host: localhost
     lmtp_port: 8024
     smtp_host: 172.19.199.1
     smtp_port: 25
@@ -246,6 +246,26 @@ Restart postfix to apply changes.
     sudo systemctl restart postfix
 
 
+### Configure cron jobs
+
+Some actions needs to be triggered on a regular basis. But since Docker
+containers are not intended for running background jobs we let the host
+do the work.
+
+Configure system crontab by running:
+
+    $ sudo crontab -e
+
+Then add the following to the bottom of the file.
+
+    0 18 * * * docker-compose -f </full/path/to/docker-compose.yaml> exec mailman-core /usr/bin/mailman digests --periodic
+    0 10 * * * docker-compose -f </full/path/to/docker-compose.yaml> exec mailman-core /usr/bin/mailman notify
+
+You may update the cron timer to your preferences. In the example above
+digests are sent out at 18:00 and moderators are notified at 10:00 to
+any actions they need to take, like approving new subscriptions.
+
+
 ### Start Mailman3
 
 Now it's time to launch the service.
@@ -263,3 +283,4 @@ Check it out at the domain you chose.
 - https://certbot.eff.org/
 - https://xiaoxing.us/2018/01/01/deploy-mailman-3-on-aws-using-docker/
 - https://www.digitalocean.com/community/tutorials/how-to-set-up-a-mail-relay-with-postfix-and-mailgun-on-ubuntu-16-04
+- https://docs.mailman3.org/en/latest/config-core.html#configuring-cron-jobs
