@@ -158,7 +158,7 @@ Make sure to update `site_owner` with a valid email.
     [mta]
     incoming: mailman.mta.postfix.LMTP
     outgoing: mailman.mta.deliver.deliver
-    lmtp_host: localhost
+    lmtp_host: 127.0.0.1
     lmtp_port: 8024
     smtp_host: 172.19.199.1
     smtp_port: 25
